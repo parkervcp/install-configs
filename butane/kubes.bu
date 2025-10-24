@@ -1,0 +1,41 @@
+variant: fcos
+version: 1.5.0
+ignition:
+  config:
+    merge:
+      - local: certs.bu
+      - local: ucore.bu
+passwd:
+  users:
+    # add ssh key to core user
+    - name: core
+      ssh_authorized_keys:
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEhm6NbPUir8ACSlzBGeHYjthLgLLSajYKBUCjoBf797 gwaihir@ish
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINqI3AlZMno+nzzjffVhpy59ZZrNlIsk9Uw64aUZrYvj parker@estel
+      groups:
+        - wheel
+        - sudo
+    # add ansible user
+    - name: ansible
+      ssh_authorized_keys:
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIrWTfJFfk6Y+1FrDmtgjTdXcFsj6tKNImOpT65TOP3v ansible
+      home_dir: /home/ansible
+      groups:
+        - wheel
+        - sudo
+      shell: /bin/bash
+    # add terraform user
+    - name: terraform
+      ssh_authorized_keys:
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIrWTfJFfk6Y+1FrDmtgjTdXcFsj6tKNImOpT65TOP3v terraform
+      home_dir: /home/terraform
+      groups:
+        - wheel
+        - sudo
+      shell: /bin/bash
+storage:
+  files:
+    - path: /etc/profile.d/zz-default-editor.sh
+      overwrite: true
+      contents:
+        inline: export EDITOR=vim

@@ -1,0 +1,9 @@
+variant: fcos
+version: 1.5.0
+storage:
+  files:
+    # import internal root cert
+    - path: /etc/pki/ca-trust/source/anchors/internal_ca.pem
+      mode: 0644
+      contents:
+        source: http://internal.parkervcp.com/root_ca.crt
